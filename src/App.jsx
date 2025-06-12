@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
@@ -8,26 +6,51 @@ function App() {
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <h1>CMD Comparer</h1>
+      <nav>
+          <div className="top-buttoms">
+            <button>Home</button>
+            <img src="" alt="" />
+          </div>
+
+          <div className="top-buttoms">
+            <button>Celulares</button>
+            <img src="" alt="" />
+          </div>
+
+          <div className="top-buttoms">
+            <button>Relojes</button>
+            <img src="" alt="" />
+          </div>
+
+          <div className="top-buttoms">
+            <button>Comparador</button>
+            <img src="" alt="" />
+          </div>
+      </nav>
+
+      <main>
+        <h2>Comparador de celulares y relojes</h2>
+        <p>Selecciona dos productos para comparar sus características</p>
+        <div className="comparador">
+          <div className="producto">
+            <h3>Producto 1</h3>
+            <button>Seleccionar</button>
+          </div>
+          <div className="producto">
+            <h3>Producto 2</h3>
+            <button>Seleccionar</button>
+          </div>
+        </div>
+        <div className="resultado">
+          <h3>Resultados de la comparación</h3>
+          <p>Aquí se mostrarán las características comparadas.</p>
+          <button>Comparar</button>
+        </div>
+      </main>
+      <footer>
+        <p>© 2023 CMD Comparer. Todos los derechos reservados.</p>
+      </footer>
     </>
   )
 }
