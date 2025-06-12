@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../styles/home.css'
 
+
 function Home() {
   const [count, setCount] = useState(0)
 
@@ -9,27 +10,37 @@ function Home() {
     <h1>CMD Comparer</h1>
       <nav>
           <div className="top-buttoms">
-            <button className='bot'>Home</button>
-            <img src="home.svg" alt="home"/>
+            <button className='bot'>
+              <img src="src/assets/home.svg" alt="home"/>
+              Home
+              </button>
+            
           </div>
 
           <div className="top-buttoms">
-            <button className='bot'>Celulares</button>
-            <img src="smartphone.svg" alt="" />
+            <button className='bot'>
+              <img src="src/assets/smartphone.svg" alt="phone" />
+              Celulares
+              </button>
+            
           </div>
 
           <div className="top-buttoms">
-            <button className='bot'>Relojes</button>
-            <img src="watch.svg" alt="" />
+            <button className='bot'>
+              <img src="src/assets/watch.svg" alt="watch" />
+              Relojes
+              </button>
           </div>
 
           <div className="top-buttoms">
-            <button className='bot'>Comparador</button>
-            <img src="compare.svg" alt="" />
+            <button className='bot'>
+              <img src="src/assets/compare.svg" alt="compare" />
+              Comparar
+              </button>
           </div>
       </nav>
 
-      <main>
+      <div className='mainfavs'>
         
         <section className="fav">
           <h2>Telefonos favoritos</h2>
@@ -49,9 +60,9 @@ function Home() {
           </div>
         </section>
 
-        <section>
+        <section className='fav'>
           <h2>Relojes Destacados</h2>
-          <div className="featured-products">
+          <div className="fav-items">
             <div className="product">
               <img src="" alt="Producto destacado" />
               <p>Producto A</p>
@@ -68,7 +79,7 @@ function Home() {
         </section>
 
 
-      </main>
+      </div>
       <footer>
         <p>© 2023 CMD Comparer. Todos los derechos reservados.</p>
       </footer>
