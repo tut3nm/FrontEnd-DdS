@@ -10,22 +10,22 @@ function App() {
       <nav>
           <div className="top-buttoms">
             <button className='bot'>Home</button>
-            <img src="./assets/home" alt="home"/>
+            <img src="home.svg" alt="home"/>
           </div>
 
           <div className="top-buttoms">
             <button className='bot'>Celulares</button>
-            <img src="" alt="" />
+            <img src="smartphone.svg" alt="" />
           </div>
 
           <div className="top-buttoms">
             <button className='bot'>Relojes</button>
-            <img src="" alt="" />
+            <img src="watch.svg" alt="" />
           </div>
 
           <div className="top-buttoms">
             <button className='bot'>Comparador</button>
-            <img src="" alt="" />
+            <img src="compare.svg" alt="" />
           </div>
       </nav>
 
