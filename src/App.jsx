@@ -9,44 +9,65 @@ function App() {
     <h1>CMD Comparer</h1>
       <nav>
           <div className="top-buttoms">
-            <button>Home</button>
+            <button className='bot'>Home</button>
+            <img src="./assets/home" alt="home"/>
+          </div>
+
+          <div className="top-buttoms">
+            <button className='bot'>Celulares</button>
             <img src="" alt="" />
           </div>
 
           <div className="top-buttoms">
-            <button>Celulares</button>
+            <button className='bot'>Relojes</button>
             <img src="" alt="" />
           </div>
 
           <div className="top-buttoms">
-            <button>Relojes</button>
-            <img src="" alt="" />
-          </div>
-
-          <div className="top-buttoms">
-            <button>Comparador</button>
+            <button className='bot'>Comparador</button>
             <img src="" alt="" />
           </div>
       </nav>
 
       <main>
-        <h2>Comparador de celulares y relojes</h2>
-        <p>Selecciona dos productos para comparar sus características</p>
-        <div className="comparador">
-          <div className="producto">
-            <h3>Producto 1</h3>
-            <button>Seleccionar</button>
+        
+        <section className="fav">
+          <h2>Telefonos favoritos</h2>
+          <div className="fav-items">
+            <div className="fav-item">
+              <img src="" alt="Producto favorito" />
+              <p>Producto 1</p>
+            </div>
+            <div className="fav-item">
+              <img src="" alt="Producto favorito" />
+              <p>Producto 2</p>
+            </div>
+            <div className="fav-item">
+              <img src="" alt="Producto favorito" />
+              <p>Producto 3</p>
+            </div>
           </div>
-          <div className="producto">
-            <h3>Producto 2</h3>
-            <button>Seleccionar</button>
+        </section>
+
+        <section>
+          <h2>Relojes Destacados</h2>
+          <div className="featured-products">
+            <div className="product">
+              <img src="" alt="Producto destacado" />
+              <p>Producto A</p>
+            </div>
+            <div className="product">
+              <img src="" alt="Producto destacado" />
+              <p>Producto B</p>
+            </div>
+            <div className="product">
+              <img src="" alt="Producto destacado" />
+              <p>Producto C</p>
+            </div>
           </div>
-        </div>
-        <div className="resultado">
-          <h3>Resultados de la comparación</h3>
-          <p>Aquí se mostrarán las características comparadas.</p>
-          <button>Comparar</button>
-        </div>
+        </section>
+
+
       </main>
       <footer>
         <p>© 2023 CMD Comparer. Todos los derechos reservados.</p>
