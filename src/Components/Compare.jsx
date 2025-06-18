@@ -7,8 +7,7 @@ export default function Compare() {
   const [firstId, setFirstId] = useState('');
   const [secondId, setSecondId] = useState('');
   const [comparison, setComparison] = useState(null);
-  const [loading, setLoading] = useState(false);
-
+  
   useEffect(() => {
     setItems([]);
     setFirstId('');
