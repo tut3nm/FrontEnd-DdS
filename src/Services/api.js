@@ -7,7 +7,6 @@ const API = axios.create({
   },
 });
 
-
 export const getAll = (resource, config = {}) => API.get(`/${resource}`, config);
 
 export const getById = (resource, id, config = {}) => API.get(`/${resource}/${id}`, config);

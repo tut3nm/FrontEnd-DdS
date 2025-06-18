@@ -1,90 +1,42 @@
-import { useState } from 'react'
-import '../styles/home.css'
+import { useAuth } from './AuthProvider';
+import { useEffect, useState } from 'react';
+import { getAll } from '../services/api';
 
+export default function Home() {
+  const { user } = useAuth();
+  const [favPhones, setFavPhones] = useState([]);
+  const [favWatches, setFavWatches] = useState([]);
 
-function Home() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    getAll('phones').then((res) => setFavPhones(res.data.slice(0, 3)));
+    getAll('watches').then((res) => setFavWatches(res.data.slice(0, 3)));
+  }, []);
 
   return (
-    <>
-    <h1>CMD Comparer</h1>
-      <nav>
-          <div className="top-buttoms">
-            <button className='bot'>
-              <img src="src/assets/home.svg" alt="home"/>
-              Home
-              </button>
-            
-          </div>
+    <div className="home-container">
+      <h1>Bienvenido, {user.username}!</h1>
 
-          <div className="top-buttoms">
-            <button className='bot'>
-              <img src="src/assets/smartphone.svg" alt="phone" />
-              Celulares
-              </button>
-            
-          </div>
-
-          <div className="top-buttoms">
-            <button className='bot'>
-              <img src="src/assets/watch.svg" alt="watch" />
-              Relojes
-              </button>
-          </div>
-
-          <div className="top-buttoms">
-            <button className='bot'>
-              <img src="src/assets/compare.svg" alt="compare" />
-              Comparar
-              </button>
-          </div>
-      </nav>
-
-      <div className='mainfavs'>
-        
-        <section className="fav">
-          <h2>Telefonos favoritos</h2>
-          <div className="fav-items">
-            <div className="fav-item">
-              <img src="" alt="Producto favorito" />
-              <p>Producto 1</p>
+      <section>
+        <h2>Teléfonos favoritos</h2>
+        <div className="fav-list">
+          {favPhones.map((p) => (
+            <div key={p.id} className="fav-item">
+              <p>{p.model}</p>
             </div>
-            <div className="fav-item">
-              <img src="" alt="Producto favorito" />
-              <p>Producto 2</p>
-            </div>
-            <div className="fav-item">
-              <img src="" alt="Producto favorito" />
-              <p>Producto 3</p>
-            </div>
-          </div>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        <section className='fav'>
-          <h2>Relojes Destacados</h2>
-          <div className="fav-items">
-            <div className="product">
-              <img src="" alt="Producto destacado" />
-              <p>Producto A</p>
+      <section>
+        <h2>Relojes favoritos</h2>
+        <div className="fav-list">
+          {favWatches.map((w) => (
+            <div key={w.id} className="fav-item">
+              <p>{w.model}</p>
             </div>
-            <div className="product">
-              <img src="" alt="Producto destacado" />
-              <p>Producto B</p>
-            </div>
-            <div className="product">
-              <img src="" alt="Producto destacado" />
-              <p>Producto C</p>
-            </div>
-          </div>
-        </section>
-
-
-      </div>
-      <footer>
-        <p>© 2023 CMD Comparer. Todos los derechos reservados.</p>
-      </footer>
-    </>
-  )
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 }
-
-export default Home
