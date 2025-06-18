@@ -14,18 +14,6 @@ export default function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const usersRes = await getAll('users');
-      const usernameExists = usersRes.data.some((u) => u.username === username);
-      if (usernameExists) {
-        setError('El nombre de usuario ya existe');
-        return;
-      }
-      const emailExists = usersRes.data.some((u) => u.email === email);
-      if (emailExists) {
-        setError('El email ya está registrado');
-        return;
-      }
-
       await create('users', {
         username,
         userpass,
