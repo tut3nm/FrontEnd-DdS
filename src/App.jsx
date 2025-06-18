@@ -2,16 +2,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './Components/AuthProvider';
 import ProtectedRoute from './components/ProtectedRoute';
 
-import Navbar from './components/Navbar';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Home from './pages/Home';
-import Phones from './pages/Phones';
-import PhoneDetail from './pages/PhoneDetail';
-import Watches from './pages/Watches';
-import WatchDetail from './pages/WatchDetail';
-import Brands from './pages/Brands';
-import Compare from './pages/Compare';
+import Navbar from './Components/Navbar';
+import Login from './Components/Login';
+import Register from './Components/Register';
+import Home from './Components/Home';
+import Phones from './Components/Phones';
+import PhoneDetail from './Components/PhoneDetail';
+import Watches from './Components/Watches';
+import WatchDetail from './Components/WatchDetail';
+import Brands from './Components/Brands';
+import Compare from './Components/Compare';
 
 function App() {
   return (
