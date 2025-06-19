@@ -12,23 +12,25 @@ export default function Login() {
   const { login } = useAuth();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      // Obtener usuarios para validar (ideal backend para login)
-      const res = await getAll('users');
-      const foundUser = res.data.find(
-        (u) => u.username === username && u.userpass === userpass
-      );
-      if (foundUser) {
-        login(foundUser);
-        navigate('/');
-      } else {
-        setError('Usuario o contraseña incorrectos');
-      }
-    } catch (err) {
-      setError('Error al conectarse al servidor');
+  e.preventDefault();
+  try {
+    const res = await getAll('users');
+    
+    const foundUser = res.data.find(
+      (u) => u.username === username && u.userpass === userpass
+    );
+
+    if (foundUser) {
+      login(foundUser);
+      navigate('/');
+    } else {
+      setError('Usuario o contraseña incorrectos');
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError('Error al conectarse al servidor');
+  }
+};
 
   return (
     <div className="auth-container">
