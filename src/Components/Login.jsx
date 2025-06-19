@@ -15,7 +15,8 @@ export default function Login() {
   e.preventDefault();
   try {
     const res = await getAll('users');
-    
+    console.log('Datos ingresados:', { username, userpass });
+    console.log('Usuarios del backend:', res.data);
     const foundUser = res.data.find(
       (u) => u.username === username && u.userpass === userpass
     );
