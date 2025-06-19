@@ -53,7 +53,7 @@ export default function Register() {
           required
         />
         <input
-          type="date"
+          type="text"
           placeholder="Fecha de nacimiento"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
