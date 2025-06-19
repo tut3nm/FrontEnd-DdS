@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { create, getAll } from '../services/api';
+import '../styles/register.css';
+import '../styles/login.css';
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -61,6 +63,7 @@ export default function Register() {
         />
         <label>
           <input
+            className='checkbox'
             type="checkbox"
             checked={permissions}
             onChange={() => setPermissions(!permissions)}

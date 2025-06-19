@@ -1,0 +1,12 @@
+label{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+}
+.checkbox{
+    width: 12px;
+    height: 12px;
+    margin-right: 10px ;
+    color: black;
+}

@@ -1,5 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
+import '../styles/navbar.css';
+
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -12,11 +14,45 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink>
-      <NavLink to="/phones" className={({ isActive }) => isActive ? 'active' : ''}>Phones</NavLink>
-      <NavLink to="/watches" className={({ isActive }) => isActive ? 'active' : ''}>Watches</NavLink>
-      <NavLink to="/brands" className={({ isActive }) => isActive ? 'active' : ''}>Brands</NavLink>
-      <NavLink to="/compare" className={({ isActive }) => isActive ? 'active' : ''}>Compare</NavLink>
+      <NavLink 
+      to="/" 
+      className='active'
+      style={{textDecoration: 'none'}}>
+      <img src="src/assets/home.svg" alt="home" />  
+      Home
+      </NavLink>
+
+      <NavLink 
+      to="/phones" 
+      className='active'
+      style={{textDecoration: 'none'}}>
+      <img src="src/assets/smartphone.svg" alt="phone" />
+      Teléfonos
+      </NavLink>
+
+      <NavLink
+      to="/watches"
+      className='active'
+      style={{textDecoration: 'none'}}>
+      <img src="src/assets/watch.svg" alt="watch" />
+      Relojes
+      </NavLink>
+
+      <NavLink
+      to="/brands"
+      className='active'
+      style={{textDecoration: 'none'}}>
+      Marcas
+      </NavLink>
+
+      <NavLink
+      to="/compare"
+      className='active'
+      style={{textDecoration: 'none'}}>
+      <img src="src/assets/compare.svg" alt="watchcomparar" />
+      Comparar
+      </NavLink>
+
       {user ? (
         <>
           <span className="navbar-user">Hola, {user.username}</span>
@@ -24,10 +60,13 @@ export default function Navbar() {
         </>
       ) : (
         <>
-          <NavLink to="/login" className={({ isActive }) => isActive ? 'active' : ''}>Login</NavLink>
-          <NavLink to="/register" className={({ isActive }) => isActive ? 'active' : ''}>Register</NavLink>
+          <NavLink to="/login" className='active-log' style={{textDecoration: 'none'}}>Login</NavLink>
+          <NavLink to="/register" className='active-log' style={{textDecoration: 'none'}}>Register</NavLink>
         </>
       )}
     </nav>
   );
 }
+
+// cambiar los 'active' por:
+// {({ isActive }) => isActive ? 'active' : ''}

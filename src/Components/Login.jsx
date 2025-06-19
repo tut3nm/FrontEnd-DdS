@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 import { getAll } from '../services/api';
+import '../styles/login.css';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -51,7 +52,7 @@ export default function Login() {
       </form>
       {error && <p className="error">{error}</p>}
       <p>
-        ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
+        ¿No tienes cuen ta? <Link to="/register">Regístrate aquí</Link>
       </p>
     </div>
   );
