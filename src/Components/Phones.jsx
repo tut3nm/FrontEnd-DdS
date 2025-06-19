@@ -3,12 +3,14 @@ import { getAll } from '../services/api';
 import { useAuth } from './AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import '../styles/phone.css'; 
 
 export default function Phones() {
   const [phones, setPhones] = useState([]);
   const [filter, setFilter] = useState('');
   const { isAdmin } = useAuth();
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     getAll('phones').then((res) => setPhones(res.data));
@@ -23,7 +25,7 @@ export default function Phones() {
       <div className="phones-header">
         <h2>Lista de Celulares</h2>
         {isAdmin && (
-          <Link to="/phones/create" className="create-button">
+          <Link to="/phones/create" className="create-button" style={{textDecoration: 'none'}}>
             Crear nuevo celular
           </Link>
         )}
