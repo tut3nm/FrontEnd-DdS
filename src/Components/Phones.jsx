@@ -25,7 +25,9 @@ export default function Phones() {
       <div className="phones-header">
         <h2>Lista de Celulares</h2>
         {isAdmin && (
-          <Link to="/phones/create" className="create-button" style={{textDecoration: 'none'}}>
+          <Link to="/phones/create" 
+            className="create-button" 
+            style={{textDecoration: 'none'}}>
             Crear nuevo celular
           </Link>
         )}
