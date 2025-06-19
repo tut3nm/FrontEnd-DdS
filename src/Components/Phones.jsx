@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { getAll, create } from '../services/api';
+import { getAll } from '../services/api';
 import { useAuth } from './AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Phones() {
   const [phones, setPhones] = useState([]);
@@ -17,23 +18,17 @@ export default function Phones() {
     p.model.toLowerCase().includes(filter.toLowerCase())
   );
 
-  const handleCreate = async () => {
-    const nuevo = {
-      model: 'Nuevo modelo',
-      brand_id: 1,
-      release_date: '2025-01-01',
-      age: 0,
-    };
-    await create('phones', nuevo);
-    // recargar lista
-    const res = await getAll('phones');
-    setPhones(res.data);
-  };
-
   return (
     <div className="phones-container">
-      <h2>Lista de Celulares</h2>
-      {isAdmin && <button onClick={handleCreate}>Crear nuevo celular</button>}
+      <div className="phones-header">
+        <h2>Lista de Celulares</h2>
+        {isAdmin && (
+          <Link to="/phones/create" className="create-button">
+            Crear nuevo celular
+          </Link>
+        )}
+      </div>
+      
       <div className="phones-content">
         <aside className="phones-filter">
           <input
