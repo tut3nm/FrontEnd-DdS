@@ -16,7 +16,7 @@ export default function Home() {
     <div className="home-container">
       <h1>Bienvenido, {user.username}!</h1>
 
-      <section>
+      <section className='s1'>
         <h2>Teléfonos favoritos</h2>
         <div className="fav-list">
           {favPhones.map((p) => (
@@ -27,7 +27,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
+      <section className='s2'>
         <h2>Relojes favoritos</h2>
         <div className="fav-list">
           {favWatches.map((w) => (
@@ -37,6 +37,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <footer>© Todos los derechos reservados al Diegote</footer>
     </div>
   );
 }
