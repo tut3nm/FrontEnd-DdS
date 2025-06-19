@@ -25,7 +25,6 @@
   margin-top: 10px;
   margin-bottom: 10px;
   gap: 8px;
-  background-color: #ffa600;
   color: #fffb00;
 
 }
@@ -46,12 +45,11 @@
     margin-top: 10px;
     margin-bottom: 10px;
     gap: 8px;
-    background-color: #00ff00;
-    color: #007000;
+    color: #00ff00;
 }
 .active-log:hover{
-    background-color: #007000;
-    color: #00ff00;
+    background-color: #00ff00;
+    color: #007000;
 }
 
 img {
