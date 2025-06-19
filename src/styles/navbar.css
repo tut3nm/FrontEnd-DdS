@@ -1,9 +1,9 @@
 .navbar {
   display: flex;
   flex-direction: row;
-  background-color: #6a09ad;
+  background:linear-gradient(to left, #6a09ad, #ff99ff); ;
   width: 60%;
-  margin: 10% 20%;
+  margin: 20px 20%;
   border-radius: 40px;
   max-height: 100px;
   margin-top: 20px;
@@ -58,3 +58,28 @@ img {
   border-radius: 10px;
   color: black;
 }
+
+.bot-log{ 
+    color: #ff0000;
+    font-weight: bold;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 30px;
+    max-width: auto;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    gap: 8px;
+    background: none;
+    font-family: "Noto Serif", "sans-serif";
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+    border: none;
+}
+
+.bot-log:hover {
+  background-color: #ff0000;
+  color: #fffb00;
+}
+

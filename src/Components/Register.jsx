@@ -70,7 +70,7 @@ export default function Register() {
           />{' '}
           Permisos de administrador
         </label>
-        <button type="submit">Registrarse</button>
+        <button className='button' type="submit">Registrarse</button>
       </form>
       {error && <p className="error">{error}</p>}
       <p>
