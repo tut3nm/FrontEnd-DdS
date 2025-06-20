@@ -1,20 +1,68 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getById } from '../services/api';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getById , remove } from '../services/api';
+import { useAuth } from './AuthProvider';
 
 export default function PhoneDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { isAdmin } = useAuth();
   const [phone, setPhone] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getById('phones', id).then((res) => setPhone(res.data));
+    const fetchPhone = async () => {
+      try {
+        const response = await getById('phones', id);
+        setPhone(response.data);
+      } catch (err) {
+        setError('Error al cargar el teléfono');
+        console.error('Error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPhone();
   }, [id]);
 
-  if (!phone) return <p>Cargando teléfono...</p>;
+  const handleEdit = () => {
+    navigate(`/phones/edit/${id}`);
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm('¿Estás seguro de eliminar este teléfono y todas sus especificaciones?')) {
+      try {
+        await remove('phones', id);
+        alert('Teléfono eliminado correctamente');
+        navigate('/phones');
+      } catch (err) {
+        alert('Error al eliminar el teléfono');
+        console.error('Error:', err);
+      }
+    }
+  };
+
+  if (loading) return <div className="loading">Cargando teléfono...</div>;
+  if (error) return <div className="error">{error}</div>;
+  if (!phone) return <div className="error">Teléfono no encontrado</div>;
 
   return (
     <div className="detail-container">
-      <h2>{phone.model}</h2>
+      <div className="header-section">
+        <h2>{phone.model}</h2>
+        
+        {isAdmin && (
+          <div className="action-buttons">
+            <button onClick={handleEdit} className="edit-btn">
+              Editar Teléfono
+            </button>
+            <button onClick={handleDelete} className="delete-btn">
+              Eliminar Teléfono
+            </button>
+          </div>
+        )}
+      </div>
       
       <div className="basic-info">
         <h3>Información Básica</h3>
@@ -25,7 +73,7 @@ export default function PhoneDetail() {
         <p><strong>Precio:</strong> ${phone.price?.toFixed(2) || 'N/A'}</p>
       </div>
 
-      {phone.specs && (
+      {phone.specs ? (
         <div className="specs-section">
           <h3>Especificaciones Técnicas</h3>
           
@@ -78,6 +126,11 @@ export default function PhoneDetail() {
               {phone.specs.cal_pri_qua && <p><strong>Calidad-Precio:</strong> {phone.specs.cal_pri_qua}/10</p>}
             </div>
           </div>
+        </div>
+      ) : (
+        <div className="specs-section">
+          <h3>Especificaciones Técnicas</h3>
+          <p className="no-specs">No hay especificaciones técnicas registradas para este teléfono.</p>
         </div>
       )}
     </div>
