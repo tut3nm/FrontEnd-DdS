@@ -1,21 +1,69 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getById } from '../services/api';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getById, remove } from '../services/api';
+import { useAuth } from './AuthProvider';
 
 export default function WatchDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { isAdmin } = useAuth();
   const [watch, setWatch] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getById('watches', id).then((res) => setWatch(res.data));
+    const fetchWatch = async () => {
+      try {
+        const response = await getById('watches', id);
+        setWatch(response.data);
+      } catch (err) {
+        setError('Error al cargar el reloj');
+        console.error('Error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchWatch();
   }, [id]);
 
-  if (!watch) return <p>Cargando reloj...</p>;
+  const handleEdit = () => {
+    navigate(`/watches/edit/${id}`);
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm('¿Estás seguro de eliminar este reloj y todas sus especificaciones?')) {
+      try {
+        await remove('watches', id);
+        alert('Reloj eliminado correctamente');
+        navigate('/watches');
+      } catch (err) {
+        alert('Error al eliminar el reloj');
+        console.error('Error:', err);
+      }
+    }
+  };
+
+  if (loading) return <div className="loading">Cargando reloj...</div>;
+  if (error) return <div className="error">{error}</div>;
+  if (!watch) return <div className="error">Reloj no encontrado</div>;
 
   return (
     <div className="detail-container">
-      <h2>{watch.model}</h2>
-
+      <div className="header-section">
+        <h2>{watch.model}</h2>
+        
+        {isAdmin && (
+          <div className="action-buttons">
+            <button onClick={handleEdit} className="edit-btn">
+              Editar Reloj
+            </button>
+            <button onClick={handleDelete} className="delete-btn">
+              Eliminar Reloj
+            </button>
+          </div>
+        )}
+      </div>
+      
       <div className="basic-info">
         <h3>Información Básica</h3>
         <p><strong>Código:</strong> {watch.code || 'N/A'}</p>
@@ -25,10 +73,10 @@ export default function WatchDetail() {
         <p><strong>Precio:</strong> ${watch.price?.toFixed(2) || 'N/A'}</p>
       </div>
 
-      {watch.specs && (
+      {watch.specs ? (
         <div className="specs-section">
           <h3>Especificaciones Técnicas</h3>
-
+          
           <div className="specs-grid">
             <div className="spec-group">
               <h4>Pantalla</h4>
@@ -58,7 +106,7 @@ export default function WatchDetail() {
             <div className="spec-group">
               <h4>Dimensiones</h4>
               {watch.specs.dimensions && <p><strong>Tamaño:</strong> {watch.specs.dimensions}</p>}
-              {watch.specs.weight && <p><strong>Peso:</strong> {watch.specs.weight} g</p>}
+              {watch.specs.weight && <p><strong>Peso:</strong> {watch.specs.weight}g</p>}
             </div>
 
             <div className="spec-group">
@@ -67,6 +115,11 @@ export default function WatchDetail() {
               {watch.specs.cal_pri_qua && <p><strong>Calidad-Precio:</strong> {watch.specs.cal_pri_qua}/10</p>}
             </div>
           </div>
+        </div>
+      ) : (
+        <div className="specs-section">
+          <h3>Especificaciones Técnicas</h3>
+          <p className="no-specs">No hay especificaciones técnicas registradas para este reloj.</p>
         </div>
       )}
     </div>

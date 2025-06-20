@@ -15,6 +15,8 @@ import Brands from './Components/Brands';
 import CreateBrand from './Components/CreateBrand';
 import Compare from './Components/Compare';
 import CreateWatch from './Components/CreateWatch';
+import EditPhone from './Components/EditPhone';
+import EditWatch from './Components/EditWatch';
 
 function App() {
   return (
@@ -28,9 +30,11 @@ function App() {
           <Route path="/phones/create" element={<ProtectedRoute><CreatePhone /></ProtectedRoute>}/>
           <Route path="/phones" element={<ProtectedRoute><Phones /></ProtectedRoute>}/>
           <Route path="/phones/:id" element={<ProtectedRoute><PhoneDetail /></ProtectedRoute>}/>
+          <Route path="/phones/edit/:id" element={<ProtectedRoute><EditPhone /></ProtectedRoute>} />
           <Route path="/watches/create" element={<ProtectedRoute><CreateWatch /></ProtectedRoute>}/>
           <Route path="/watches" element={<ProtectedRoute><Watches /></ProtectedRoute>}/>
           <Route path="/watches/:id" element={<ProtectedRoute><WatchDetail /></ProtectedRoute>}/>
+          <Route path="/watches/edit/:id" element={<ProtectedRoute><EditWatch /></ProtectedRoute>} />
           <Route path="/brands/create" element={<ProtectedRoute><CreateBrand /></ProtectedRoute>}/>
           <Route path="/brands" element={<ProtectedRoute><Brands /></ProtectedRoute>}/>
           <Route path="/compare" element={<ProtectedRoute><Compare /></ProtectedRoute>}/>
