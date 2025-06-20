@@ -5,36 +5,40 @@ import { useNavigate } from 'react-router-dom';
 export default function CreatePhone() {
   const navigate = useNavigate();
   const [brands, setBrands] = useState([]);
-  const [formData, setFormData] = useState({
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const [phoneData, setPhoneData] = useState({
     model: '',
     code: '',
     brand_id: '',
     release_date: '',
     age: '',
-    price: '',
-    specs: {
-      cam_1: '',
-      cam_2: '',
-      cam_3: '',
-      cam_4: '',
-      cam_front: '',
-      chipset: '',
-      display_tec: '',
-      display_ppp: '',
-      display_inch: '',
-      display_freq: '',
-      batery: '',
-      charge: '',
-      os: '',
-      ram: '',
-      storage: '',
-      dimensions: '',
-      weight: '',
-      video_specs: '',
-      has_5g: false,
-      calification: '',
-      cal_pri_qua: ''
-    }
+    price: ''
+  });
+
+  const [specsData, setSpecsData] = useState({
+    cam_1: '',
+    cam_2: '',
+    cam_3: '',
+    cam_4: '',
+    cam_front: '',
+    chipset: '',
+    display_tec: '',
+    display_ppp: '',
+    display_inch: '',
+    display_freq: '',
+    batery: '',
+    charge: '',
+    os: '',
+    ram: '',
+    storage: '',
+    dimensions: '',
+    weight: '',
+    video_specs: '',
+    has_5g: false,
+    calification: '',
+    cal_pri_qua: ''
   });
 
   useEffect(() => {
@@ -44,6 +48,7 @@ export default function CreatePhone() {
         setBrands(response.data);
       } catch (error) {
         console.error('Error al cargar marcas:', error);
+        alert('Error al cargar las marcas disponibles');
       }
     };
     fetchBrands();
@@ -52,65 +57,98 @@ export default function CreatePhone() {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (name.startsWith('specs.')) {
-      const key = name.split('.')[1];
-      setFormData(prev => ({
+    if (name in specsData) {
+      setSpecsData(prev => ({
         ...prev,
-        specs: {
-          ...prev.specs,
-          [key]: type === 'checkbox' ? checked : type === 'number' ? parseFloat(value) || 0 : value,
-        }
+        [name]: type === 'checkbox' ? checked : value
       }));
     } else {
-      setFormData(prev => ({
+      setPhoneData(prev => ({
         ...prev,
-        [name]: type === 'number' ? parseFloat(value) || 0 : value
+        [name]: value
       }));
     }
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!phoneData.model.trim()) newErrors.model = 'Modelo es requerido';
+    if (!phoneData.brand_id) newErrors.brand_id = 'Marca es requerida';
+    if (!phoneData.price || isNaN(parseFloat(phoneData.price))) {
+      newErrors.price = 'Precio válido es requerido';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    setIsSubmitting(true);
+    
     try {
-      const phoneData = {
-        model: formData.model,
-        code: formData.code,
-        brand_id: formData.brand_id,
-        release_date: formData.release_date,
-        age: formData.age ? parseInt(formData.age) : null,
-        price: parseFloat(formData.price) || 0,
-        specs: {
-          ...formData.specs,
-          batery: formData.specs.batery ? parseInt(formData.specs.batery) : null,
-          charge: formData.specs.charge ? parseInt(formData.specs.charge) : null,
-          ram: formData.specs.ram ? parseInt(formData.specs.ram) : null,
-          storage: formData.specs.storage ? parseInt(formData.specs.storage) : null,
-          weight: formData.specs.weight ? parseInt(formData.specs.weight) : null,
-          display_ppp: formData.specs.display_ppp ? parseInt(formData.specs.display_ppp) : null,
-          display_freq: formData.specs.display_freq ? parseInt(formData.specs.display_freq) : null,
-          calification: formData.specs.calification ? parseFloat(formData.specs.calification) : null,
-          cal_pri_qua: formData.specs.cal_pri_qua ? parseFloat(formData.specs.cal_pri_qua) : null,
-          display_inch: formData.specs.display_inch ? parseFloat(formData.specs.display_inch) : null
-        }
-      };
+      const response = await create('phones', {
+        model: phoneData.model,
+        code: phoneData.code,
+        brand_id: phoneData.brand_id,
+        release_date: phoneData.release_date,
+        age: phoneData.age ? parseInt(phoneData.age) : null,
+        price: parseFloat(phoneData.price) || 0
+      });
 
-      const response = await create('phones', phoneData);
-      
-      if (response) {
-        alert('Teléfono creado exitosamente!');
-        navigate('/phones');
+      console.log('Respuesta completa:', JSON.stringify(response, null, 2));
+
+      if (!response?.data?.id) {
+        console.error('Estructura de respuesta inesperada:', response);
+        throw new Error('El servidor no devolvió un ID válido en la respuesta');
       }
+
+      const phoneId = response.data.id;
+      console.log('ID del teléfono obtenido:', phoneId);
+
+      const hasSpecsData = Object.values(specsData).some(
+        value => (typeof value === 'boolean' && value) || 
+                (typeof value !== 'boolean' && value !== '')
+      );
+
+      if (hasSpecsData) {
+        console.log('Creando especificaciones para phoneId:', phoneId);
+        try {
+          const specsResponse = await create(`phoneSpecs/${phoneId}`, {
+            ...specsData,
+            phone_id: phoneId
+          });
+          console.log('Especificaciones creadas:', specsResponse.data);
+        } catch (specsError) {
+          console.error('Error al crear especificaciones:', specsError.response?.data || specsError.message);
+          alert('Teléfono creado, pero hubo un error al guardar las especificaciones');
+        }
+      }
+
+      alert('¡Teléfono creado exitosamente!');
+      navigate('/phones');
     } catch (error) {
-      console.error('Error al crear celular:', error);
-      alert(`Error al crear el celular: ${error.message}`);
+      console.error('Error en el proceso de creación:', {
+        message: error.message,
+        response: error.response?.data,
+        stack: error.stack
+      });
+      
+      alert(`Error: ${error.response?.data?.message || error.message || 'Error desconocido'}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} className="phone-form">
-        <h2>Crear Nuevo Celular</h2>
-        
+        <h2>Crear Nuevo Teléfono</h2>
+
         <div className="form-section">
           <h3>Información Básica</h3>
           
@@ -118,17 +156,19 @@ export default function CreatePhone() {
             <label>Modelo*</label>
             <input 
               name="model" 
-              value={formData.model} 
+              value={phoneData.model} 
               onChange={handleChange} 
-              required 
+              className={errors.model ? 'error' : ''}
+              required
             />
+            {errors.model && <span className="error-message">{errors.model}</span>}
           </div>
           
           <div className="form-group">
             <label>Código</label>
             <input 
               name="code" 
-              value={formData.code} 
+              value={phoneData.code} 
               onChange={handleChange} 
             />
           </div>
@@ -137,8 +177,9 @@ export default function CreatePhone() {
             <label>Marca*</label>
             <select
               name="brand_id"
-              value={formData.brand_id}
+              value={phoneData.brand_id}
               onChange={handleChange}
+              className={errors.brand_id ? 'error' : ''}
               required
             >
               <option value="">Seleccione una marca</option>
@@ -148,16 +189,16 @@ export default function CreatePhone() {
                 </option>
               ))}
             </select>
+            {errors.brand_id && <span className="error-message">{errors.brand_id}</span>}
           </div>
           
           <div className="form-group">
-            <label>Fecha de Lanzamiento*</label>
+            <label>Fecha de Lanzamiento</label>
             <input 
               name="release_date" 
               type="date" 
-              value={formData.release_date} 
+              value={phoneData.release_date} 
               onChange={handleChange} 
-              required 
             />
           </div>
           
@@ -167,7 +208,7 @@ export default function CreatePhone() {
               name="age" 
               type="number" 
               min="0"
-              value={formData.age} 
+              value={phoneData.age} 
               onChange={handleChange} 
             />
           </div>
@@ -179,10 +220,12 @@ export default function CreatePhone() {
               type="number" 
               step="0.01" 
               min="0"
-              value={formData.price} 
+              value={phoneData.price} 
               onChange={handleChange} 
-              required 
+              className={errors.price ? 'error' : ''}
+              required
             />
+            {errors.price && <span className="error-message">{errors.price}</span>}
           </div>
         </div>
 
@@ -193,8 +236,8 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Cámara Principal</label>
               <input 
-                name="specs.cam_1" 
-                value={formData.specs.cam_1} 
+                name="cam_1" 
+                value={specsData.cam_1} 
                 onChange={handleChange} 
                 placeholder="Ej: 50MP f/1.8"
               />
@@ -203,8 +246,8 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Cámara 2</label>
               <input 
-                name="specs.cam_2" 
-                value={formData.specs.cam_2} 
+                name="cam_2" 
+                value={specsData.cam_2} 
                 onChange={handleChange} 
                 placeholder="Ej: 12MP ultra wide"
               />
@@ -213,8 +256,8 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Cámara 3</label>
               <input 
-                name="specs.cam_3" 
-                value={formData.specs.cam_3} 
+                name="cam_3" 
+                value={specsData.cam_3} 
                 onChange={handleChange} 
               />
             </div>
@@ -222,8 +265,8 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Cámara 4</label>
               <input 
-                name="specs.cam_4" 
-                value={formData.specs.cam_4} 
+                name="cam_4" 
+                value={specsData.cam_4} 
                 onChange={handleChange} 
               />
             </div>
@@ -231,8 +274,8 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Cámara Frontal</label>
               <input 
-                name="specs.cam_front" 
-                value={formData.specs.cam_front} 
+                name="cam_front" 
+                value={specsData.cam_front} 
                 onChange={handleChange} 
                 placeholder="Ej: 12MP f/2.2"
               />
@@ -241,8 +284,8 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Chipset</label>
               <input 
-                name="specs.chipset" 
-                value={formData.specs.chipset} 
+                name="chipset" 
+                value={specsData.chipset} 
                 onChange={handleChange} 
                 placeholder="Ej: Snapdragon 8 Gen 2"
               />
@@ -251,10 +294,10 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>RAM (GB)</label>
               <input 
-                name="specs.ram" 
+                name="ram" 
                 type="number" 
                 min="0"
-                value={formData.specs.ram} 
+                value={specsData.ram} 
                 onChange={handleChange} 
               />
             </div>
@@ -262,10 +305,10 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Almacenamiento (GB)</label>
               <input 
-                name="specs.storage" 
+                name="storage" 
                 type="number" 
                 min="0"
-                value={formData.specs.storage} 
+                value={specsData.storage} 
                 onChange={handleChange} 
               />
             </div>
@@ -273,8 +316,8 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Tecnología de Pantalla</label>
               <input 
-                name="specs.display_tec" 
-                value={formData.specs.display_tec} 
+                name="display_tec" 
+                value={specsData.display_tec} 
                 onChange={handleChange} 
                 placeholder="Ej: AMOLED"
               />
@@ -283,10 +326,10 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>PPP de Pantalla</label>
               <input 
-                name="specs.display_ppp" 
+                name="display_ppp" 
                 type="number" 
                 min="0"
-                value={formData.specs.display_ppp} 
+                value={specsData.display_ppp} 
                 onChange={handleChange} 
               />
             </div>
@@ -294,11 +337,11 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Pulgadas de Pantalla</label>
               <input 
-                name="specs.display_inch" 
+                name="display_inch" 
                 type="number" 
                 step="0.1" 
                 min="0"
-                value={formData.specs.display_inch} 
+                value={specsData.display_inch} 
                 onChange={handleChange} 
               />
             </div>
@@ -306,10 +349,10 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Frecuencia (Hz)</label>
               <input 
-                name="specs.display_freq" 
+                name="display_freq" 
                 type="number" 
                 min="0"
-                value={formData.specs.display_freq} 
+                value={specsData.display_freq} 
                 onChange={handleChange} 
               />
             </div>
@@ -317,10 +360,10 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Batería (mAh)</label>
               <input 
-                name="specs.batery" 
+                name="batery" 
                 type="number" 
                 min="0"
-                value={formData.specs.batery} 
+                value={specsData.batery} 
                 onChange={handleChange} 
               />
             </div>
@@ -328,10 +371,10 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Carga (W)</label>
               <input 
-                name="specs.charge" 
+                name="charge" 
                 type="number" 
                 min="0"
-                value={formData.specs.charge} 
+                value={specsData.charge} 
                 onChange={handleChange} 
               />
             </div>
@@ -339,8 +382,8 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Sistema Operativo</label>
               <input 
-                name="specs.os" 
-                value={formData.specs.os} 
+                name="os" 
+                value={specsData.os} 
                 onChange={handleChange} 
                 placeholder="Ej: Android 13"
               />
@@ -349,8 +392,8 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Dimensiones</label>
               <input 
-                name="specs.dimensions" 
-                value={formData.specs.dimensions} 
+                name="dimensions" 
+                value={specsData.dimensions} 
                 onChange={handleChange} 
                 placeholder="Ej: 146.7 x 71.5 x 7.9 mm"
               />
@@ -359,10 +402,10 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Peso (g)</label>
               <input 
-                name="specs.weight" 
+                name="weight" 
                 type="number" 
                 min="0"
-                value={formData.specs.weight} 
+                value={specsData.weight} 
                 onChange={handleChange} 
               />
             </div>
@@ -370,8 +413,8 @@ export default function CreatePhone() {
             <div className="form-group full-width">
               <label>Especificaciones de Video</label>
               <textarea 
-                name="specs.video_specs" 
-                value={formData.specs.video_specs} 
+                name="video_specs" 
+                value={specsData.video_specs} 
                 onChange={handleChange} 
                 placeholder="Ej: 8K@24fps, 4K@60fps"
                 rows="3"
@@ -381,9 +424,9 @@ export default function CreatePhone() {
             <div className="form-group checkbox-group">
               <label>
                 <input 
-                  name="specs.has_5g" 
+                  name="has_5g" 
                   type="checkbox" 
-                  checked={formData.specs.has_5g} 
+                  checked={specsData.has_5g} 
                   onChange={handleChange} 
                 />
                 Soporta 5G
@@ -393,12 +436,12 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Calificación (0-10)</label>
               <input 
-                name="specs.calification" 
+                name="calification" 
                 type="number" 
                 step="0.1" 
                 min="0" 
                 max="10"
-                value={formData.specs.calification} 
+                value={specsData.calification} 
                 onChange={handleChange} 
               />
             </div>
@@ -406,12 +449,12 @@ export default function CreatePhone() {
             <div className="form-group">
               <label>Calidad-Precio (0-10)</label>
               <input 
-                name="specs.cal_pri_qua" 
+                name="cal_pri_qua" 
                 type="number" 
                 step="0.1" 
                 min="0" 
                 max="10"
-                value={formData.specs.cal_pri_qua} 
+                value={specsData.cal_pri_qua} 
                 onChange={handleChange} 
               />
             </div>
@@ -419,11 +462,20 @@ export default function CreatePhone() {
         </div>
 
         <div className="form-actions">
-          <button type="button" onClick={() => navigate('/phones')} className="cancel-btn">
+          <button 
+            type="button" 
+            onClick={() => navigate('/phones')} 
+            className="cancel-btn"
+            disabled={isSubmitting}
+          >
             Cancelar
           </button>
-          <button type="submit" className="submit-btn">
-            Guardar Teléfono
+          <button 
+            type="submit" 
+            className="submit-btn"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Guardando...' : 'Guardar Teléfono'}
           </button>
         </div>
       </form>

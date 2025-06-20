@@ -11,25 +11,27 @@ export default function CreateWatch() {
     brand_id: '',
     release_date: '',
     age: '',
-    price: '',
-    specs: {
-      chipset: '',
-      display_tec: '',
-      display_ppp: '',
-      display_inch: '',
-      batery: '',
-      os: '',
-      ram: '',
-      storage: '',
-      dimensions: '',
-      weight: '',
-      has_sim: false,
-      calification: '',
-      cal_pri_qua: ''
-    }
+    price: ''
+  });
+  
+  const [specsData, setSpecsData] = useState({
+    chipset: '',
+    display_tec: '',
+    display_ppp: '',
+    display_inch: '',
+    batery: '',
+    os: '',
+    ram: '',
+    storage: '',
+    dimensions: '',
+    weight: '',
+    has_sim: false,
+    calification: '',
+    cal_pri_qua: ''
   });
 
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const loadBrands = async () => {
@@ -45,15 +47,11 @@ export default function CreateWatch() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
-    if (name.startsWith('specs.')) {
-      const fieldName = name.split('.')[1];
-      setFormData(prev => ({
+    
+    if (name in specsData) {
+      setSpecsData(prev => ({
         ...prev,
-        specs: {
-          ...prev.specs,
-          [fieldName]: type === 'checkbox' ? checked : value
-        }
+        [name]: type === 'checkbox' ? checked : value
       }));
     } else {
       setFormData(prev => ({
@@ -65,7 +63,8 @@ export default function CreateWatch() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setIsSubmitting(true);
+
     const newErrors = {};
     if (!formData.model) newErrors.model = 'Modelo es requerido';
     if (!formData.brand_id) newErrors.brand_id = 'Marca es requerida';
@@ -73,15 +72,29 @@ export default function CreateWatch() {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      setIsSubmitting(false);
       return;
     }
 
     try {
-      await create('watches', formData);
+      const watchResponse = await create('watches', formData);
+      const watchId = watchResponse.data.id;
+      
+      const hasSpecsData = Object.values(specsData).some(
+        value => (typeof value === 'boolean' && value) || 
+                (typeof value !== 'boolean' && value !== '')
+      );
+      
+      if (hasSpecsData) {
+        await create(`watchSpecs/${watchId}`, specsData);
+      }
+      
       navigate('/watches');
     } catch (error) {
       console.error('Error creating watch:', error);
       alert('Error al crear reloj: ' + (error.message || 'Error desconocido'));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -166,8 +179,8 @@ export default function CreateWatch() {
           <div>
             <label>Chipset</label>
             <input
-              name="specs.chipset"
-              value={formData.specs.chipset}
+              name="chipset"
+              value={specsData.chipset}
               onChange={handleChange}
             />
           </div>
@@ -175,8 +188,8 @@ export default function CreateWatch() {
           <div>
             <label>Tecnología de Pantalla</label>
             <input
-              name="specs.display_tec"
-              value={formData.specs.display_tec}
+              name="display_tec"
+              value={specsData.display_tec}
               onChange={handleChange}
             />
           </div>
@@ -185,8 +198,8 @@ export default function CreateWatch() {
             <label>PPP de Pantalla</label>
             <input
               type="number"
-              name="specs.display_ppp"
-              value={formData.specs.display_ppp}
+              name="display_ppp"
+              value={specsData.display_ppp}
               onChange={handleChange}
             />
           </div>
@@ -196,8 +209,8 @@ export default function CreateWatch() {
             <input
               type="number"
               step="0.1"
-              name="specs.display_inch"
-              value={formData.specs.display_inch}
+              name="display_inch"
+              value={specsData.display_inch}
               onChange={handleChange}
             />
           </div>
@@ -206,8 +219,8 @@ export default function CreateWatch() {
             <label>Batería (mAh)</label>
             <input
               type="number"
-              name="specs.batery"
-              value={formData.specs.batery}
+              name="batery"
+              value={specsData.batery}
               onChange={handleChange}
             />
           </div>
@@ -215,8 +228,8 @@ export default function CreateWatch() {
           <div>
             <label>Sistema Operativo</label>
             <input
-              name="specs.os"
-              value={formData.specs.os}
+              name="os"
+              value={specsData.os}
               onChange={handleChange}
             />
           </div>
@@ -225,8 +238,8 @@ export default function CreateWatch() {
             <label>RAM (MB)</label>
             <input
               type="number"
-              name="specs.ram"
-              value={formData.specs.ram}
+              name="ram"
+              value={specsData.ram}
               onChange={handleChange}
             />
           </div>
@@ -235,8 +248,8 @@ export default function CreateWatch() {
             <label>Almacenamiento (MB)</label>
             <input
               type="number"
-              name="specs.storage"
-              value={formData.specs.storage}
+              name="storage"
+              value={specsData.storage}
               onChange={handleChange}
             />
           </div>
@@ -244,8 +257,8 @@ export default function CreateWatch() {
           <div>
             <label>Dimensiones</label>
             <input
-              name="specs.dimensions"
-              value={formData.specs.dimensions}
+              name="dimensions"
+              value={specsData.dimensions}
               onChange={handleChange}
             />
           </div>
@@ -254,8 +267,8 @@ export default function CreateWatch() {
             <label>Peso (g)</label>
             <input
               type="number"
-              name="specs.weight"
-              value={formData.specs.weight}
+              name="weight"
+              value={specsData.weight}
               onChange={handleChange}
             />
           </div>
@@ -264,8 +277,8 @@ export default function CreateWatch() {
             <label>
               <input
                 type="checkbox"
-                name="specs.has_sim"
-                checked={formData.specs.has_sim}
+                name="has_sim"
+                checked={specsData.has_sim}
                 onChange={handleChange}
               />
               Tiene SIM
@@ -277,8 +290,8 @@ export default function CreateWatch() {
             <input
               type="number"
               step="0.1"
-              name="specs.calification"
-              value={formData.specs.calification}
+              name="calification"
+              value={specsData.calification}
               onChange={handleChange}
             />
           </div>
@@ -288,19 +301,19 @@ export default function CreateWatch() {
             <input
               type="number"
               step="0.1"
-              name="specs.cal_pri_qua"
-              value={formData.specs.cal_pri_qua}
+              name="cal_pri_qua"
+              value={specsData.cal_pri_qua}
               onChange={handleChange}
             />
           </div>
         </div>
 
         <div>
-          <button type="button" onClick={() => navigate('/watches')}>
+          <button type="button" onClick={() => navigate('/watches')} disabled={isSubmitting}>
             Cancelar
           </button>
-          <button type="submit">
-            Guardar
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Guardando...' : 'Guardar'}
           </button>
         </div>
       </form>
