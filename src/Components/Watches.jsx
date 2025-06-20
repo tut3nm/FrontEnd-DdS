@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getAll, create } from '../services/api';
+import { getAll } from '../services/api';
 import { useAuth } from './AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function Watches() {
   const [watches, setWatches] = useState([]);
@@ -10,29 +10,32 @@ export default function Watches() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAll('watches').then((res) => setWatches(res.data));
+    const loadWatches = async () => {
+      try {
+        const response = await getAll('watches');
+        setWatches(response.data);
+      } catch (error) {
+        console.error('Error loading watches:', error);
+      }
+    };
+    loadWatches();
   }, []);
 
   const filteredWatches = watches.filter((w) =>
     w.model.toLowerCase().includes(filter.toLowerCase())
   );
 
-  const handleCreate = async () => {
-    const nuevo = {
-      model: 'Nuevo reloj',
-      brand_id: 1,
-      release_date: '2025-01-01',
-      age: 0,
-    };
-    await create('watches', nuevo);
-    const res = await getAll('watches');
-    setWatches(res.data);
-  };
-
   return (
     <div className="watches-container">
-      <h2>Lista de Relojes</h2>
-      {isAdmin && <button onClick={handleCreate}>Crear nuevo reloj</button>}
+      <div className="watches-header">
+        <h2>Lista de Relojes</h2>
+        {isAdmin && (
+          <Link to="/watches/create" className="create-button">
+            Crear nuevo reloj
+          </Link>
+        )}
+      </div>
+      
       <div className="watches-content">
         <aside className="watches-filter">
           <input
