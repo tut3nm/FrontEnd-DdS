@@ -51,7 +51,7 @@ export default function Login() {
           onChange={(e) => setUserpass(e.target.value)}
           required
         />
-        <button type="submit">Ingresar</button>
+        <button className='button' type="submit">Ingresar</button>
       </form>
       {error && <p className="error">{error}</p>}
       <p>

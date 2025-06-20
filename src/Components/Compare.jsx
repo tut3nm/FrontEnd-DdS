@@ -88,12 +88,6 @@ export default function Compare() {
         {firstDevice && (
           <div className="device-card">
             <h3>{firstDevice.brand} {firstDevice.model}</h3>
-            {firstDevice.imageUrl && (
-              <img
-                src={firstDevice.imageUrl}
-                alt={`${firstDevice.brand} ${firstDevice.model}`}
-              />
-            )}
             <ul>
               <li>Pantalla: {firstDevice.specs?.screen}</li>
               <li>CPU: {firstDevice.specs?.cpu}</li>
@@ -106,12 +100,6 @@ export default function Compare() {
         {secondDevice && (
           <div className="device-card">
             <h3>{secondDevice.brand} {secondDevice.model}</h3>
-            {secondDevice.imageUrl && (
-              <img
-                src={secondDevice.imageUrl}
-                alt={`${secondDevice.brand} ${secondDevice.model}`}
-              />
-            )}
             <ul>
               <li>Pantalla: {secondDevice.specs?.screen}</li>
               <li>CPU: {secondDevice.specs?.cpu}</li>

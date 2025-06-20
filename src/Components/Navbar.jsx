@@ -55,8 +55,7 @@ export default function Navbar() {
 
       {user ? (
         <>
-          <span className="navbar-user">Hola, {user.username}</span>
-          <button onClick={handleLogout} className="btn-logout">Logout</button>
+          <button onClick={handleLogout} className="bot-log">Logout</button>
         </>
       ) : (
         <>
@@ -68,5 +67,3 @@ export default function Navbar() {
   );
 }
 
-// cambiar los 'active' por:
-// {({ isActive }) => isActive ? 'active' : ''}
