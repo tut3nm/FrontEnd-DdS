@@ -1,10 +1,10 @@
-.phone-container{
+.container{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.phone-header{
+.header{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,7 +14,7 @@
     color: #6009ad;
 }
 
-h2{
+.head2{
     text-align: center;
     font-family: "Noto Serif", "sans-serif";
     font-size: 32px;
@@ -46,13 +46,11 @@ h2{
     font-weight: 600;
 }
 
-.phone-content{
+.content{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 20px;
-    background-color: yellow;
 }
 

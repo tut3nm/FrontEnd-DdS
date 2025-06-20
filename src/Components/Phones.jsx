@@ -3,7 +3,7 @@ import { getAll } from '../services/api';
 import { useAuth } from './AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import '../styles/phone.css'; 
+import '../styles/device.css'; 
 
 export default function Phones() {
   const [phones, setPhones] = useState([]);
@@ -21,9 +21,9 @@ export default function Phones() {
   );
 
   return (
-    <div className="phones-container">
-      <div className="phones-header">
-        <h2>Lista de Celulares</h2>
+    <div className="container">
+      <div className="header">
+        <h2 className='head2'>Lista de Celulares</h2>
         {isAdmin && (
           <Link to="/phones/create" 
             className="create-button" 
@@ -33,8 +33,8 @@ export default function Phones() {
         )}
       </div>
       
-      <div className="phones-content">
-        <aside className="phones-filter">
+      <div className="content">
+        <aside className="filter">
           <input
             type="text"
             placeholder="Filtrar por modelo"
@@ -42,11 +42,11 @@ export default function Phones() {
             onChange={(e) => setFilter(e.target.value)}
           />
         </aside>
-        <ul className="phones-list">
+        <ul className="list">
           {filteredPhones.map((p) => (
             <li
               key={p.id}
-              className="phones-item"
+              className="item"
               onClick={() => navigate(`/phones/${p.id}`)}
             >
               {p.model}

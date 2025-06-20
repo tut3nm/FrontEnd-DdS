@@ -26,7 +26,6 @@
   margin-bottom: 10px;
   gap: 8px;
   color: #fffb00;
-
 }
 
 .active:hover {
@@ -76,6 +75,7 @@ img {
     font-weight: 600;
     text-align: left;
     border: none;
+    cursor: pointer;
 }
 
 .bot-log:hover {

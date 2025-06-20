@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { create } from '../services/api';
+import '../styles/create.css';
 
 export default function CreateBrand() {
   const navigate = useNavigate();

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { create, getAll } from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import '../styles/create.css';
 
 export default function CreatePhone() {
   const navigate = useNavigate();
@@ -147,31 +148,33 @@ export default function CreatePhone() {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} className="phone-form">
-        <h2>Crear Nuevo Teléfono</h2>
+        <h2 className='head1'>Crear Nuevo Teléfono</h2>
 
-        <div className="form-section">
-          <h3>Información Básica</h3>
+        <div className="form-sec">
+
+          <h3 className='head3'>Información Básica</h3>
           
-          <div className="form-group">
-            <label>Modelo*</label>
-            <input 
-              name="model" 
-              value={phoneData.model} 
-              onChange={handleChange} 
-              className={errors.model ? 'error' : ''}
-              required
-            />
-            {errors.model && <span className="error-message">{errors.model}</span>}
-          </div>
+          <div className="specs-grid">
+            <div className="form-group">
+              <label>Modelo*</label>
+              <input 
+                name="model" 
+                value={phoneData.model} 
+                onChange={handleChange} 
+                className={errors.model ? 'error' : ''}
+                required
+              />
+              {errors.model && <span className="error-message">{errors.model}</span>}
+            </div>
           
-          <div className="form-group">
-            <label>Código</label>
-            <input 
-              name="code" 
-              value={phoneData.code} 
-              onChange={handleChange} 
-            />
-          </div>
+            <div className="form-group">
+              <label>Código</label>
+              <input 
+                name="code" 
+                value={phoneData.code} 
+                onChange={handleChange} 
+              />
+            </div>
           
           <div className="form-group">
             <label>Marca*</label>
@@ -227,10 +230,11 @@ export default function CreatePhone() {
             />
             {errors.price && <span className="error-message">{errors.price}</span>}
           </div>
+          </div>
         </div>
 
-        <div className="form-section">
-          <h3>Especificaciones Técnicas</h3>
+        <div className="form-sec">
+          <h3 className='head3'>Especificaciones Técnicas</h3>
           
           <div className="specs-grid">
             <div className="form-group">
@@ -421,16 +425,15 @@ export default function CreatePhone() {
               />
             </div>
             
-            <div className="form-group checkbox-group">
-              <label>
-                <input 
+            <div className="form-checkbox-group">
+              <label>Soporta 5G</label>
+              <input 
                   name="has_5g" 
+                  className='checkbox'
                   type="checkbox" 
                   checked={specsData.has_5g} 
                   onChange={handleChange} 
                 />
-                Soporta 5G
-              </label>
             </div>
             
             <div className="form-group">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { create, getAll } from '../services/api';
+import '../styles/create.css'
 
 export default function CreateWatch() {
   const navigate = useNavigate();
