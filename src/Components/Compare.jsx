@@ -25,8 +25,10 @@ export default function Compare() {
     if (!firstId || !secondId) return;
 
     try {
-      const res1 = await getById(resource, firstId);
-      const res2 = await getById(resource, secondId);
+      const [res1, res2] = await Promise.all([
+        getById(resource, firstId),
+        getById(resource, secondId)
+      ]);
       setFirstDevice(res1.data);
       setSecondDevice(res2.data);
     } catch (error) {
@@ -34,9 +36,22 @@ export default function Compare() {
     }
   };
 
+  const renderSpecs = (specs) => {
+    if (!specs) return <p>Sin especificaciones disponibles.</p>;
+
+    return (
+      <ul>
+        {Object.entries(specs).map(([key, value]) => (
+          <li key={key}>
+            <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <div className="compare-container">
-      
       <div className="compare-bar">
         <label>
           Dispositivo:
@@ -88,27 +103,18 @@ export default function Compare() {
         {firstDevice && (
           <div className="device-card">
             <h3>{firstDevice.brand} {firstDevice.model}</h3>
-            <ul>
-              <li>Pantalla: {firstDevice.specs?.screen}</li>
-              <li>CPU: {firstDevice.specs?.cpu}</li>
-              <li>Batería: {firstDevice.specs?.battery}</li>
-              <li>Cámara: {firstDevice.specs?.camera}</li>
-            </ul>
+            {renderSpecs(firstDevice.specs)}
           </div>
         )}
 
         {secondDevice && (
           <div className="device-card">
             <h3>{secondDevice.brand} {secondDevice.model}</h3>
-            <ul>
-              <li>Pantalla: {secondDevice.specs?.screen}</li>
-              <li>CPU: {secondDevice.specs?.cpu}</li>
-              <li>Batería: {secondDevice.specs?.battery}</li>
-              <li>Cámara: {secondDevice.specs?.camera}</li>
-            </ul>
+            {renderSpecs(secondDevice.specs)}
           </div>
         )}
       </div>
     </div>
   );
 }
+
