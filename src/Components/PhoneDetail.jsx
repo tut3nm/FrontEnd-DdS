@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getById , remove } from '../services/api';
 import { useAuth } from './AuthProvider';
+import '../styles/detail.css';
 
 export default function PhoneDetail() {
   const { id } = useParams();
@@ -51,7 +52,7 @@ export default function PhoneDetail() {
     <div className="detail-container">
       <div className="header-section">
         <h2>{phone.model}</h2>
-        
+      </div>
         {isAdmin && (
           <div className="action-buttons">
             <button onClick={handleEdit} className="edit-btn">
@@ -62,15 +63,17 @@ export default function PhoneDetail() {
             </button>
           </div>
         )}
-      </div>
+      
       
       <div className="basic-info">
         <h3>Información Básica</h3>
-        <p><strong>Código:</strong> {phone.code || 'N/A'}</p>
-        <p><strong>Marca ID:</strong> {phone.brand_id}</p>
-        <p><strong>Fecha de lanzamiento:</strong> {phone.release_date}</p>
-        <p><strong>Edad (meses):</strong> {phone.age || 'N/A'}</p>
-        <p><strong>Precio:</strong> ${phone.price?.toFixed(2) || 'N/A'}</p>
+        <div className='info-group'>
+          <p className='p-info'><strong>Código:</strong> {phone.code || 'N/A'}</p>
+          <p className='p-info'><strong>Marca ID:</strong> {phone.brand_id}</p>
+          <p className='p-info'><strong>Fecha de lanzamiento:</strong> {phone.release_date}</p>
+          <p className='p-info'><strong>Edad (meses):</strong> {phone.age || 'N/A'}</p>
+          <p className='p-info'><strong>Precio:</strong> ${phone.price?.toFixed(2) || 'N/A'}</p>
+        </div>
       </div>
 
       {phone.specs ? (

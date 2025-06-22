@@ -22,7 +22,7 @@ export default function Home() {
         <div className="fav-list">
           {favPhones.map((p) => (
             <div key={p.id} className="fav-item">
-              <p>{p.model}</p>
+              <p className='p-data'>{p.model}</p>
             </div>
           ))}
         </div>
@@ -33,7 +33,7 @@ export default function Home() {
         <div className="fav-list">
           {favWatches.map((w) => (
             <div key={w.id} className="fav-item">
-              <p>{w.model}</p>
+              <p className='p-data'>{w.model}</p>
             </div>
           ))}
         </div>

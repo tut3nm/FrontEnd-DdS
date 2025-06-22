@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getById, remove } from '../services/api';
 import { useAuth } from './AuthProvider';
+import '../styles/detail.css';
 
 export default function WatchDetail() {
   const { id } = useParams();
@@ -51,7 +52,7 @@ export default function WatchDetail() {
     <div className="detail-container">
       <div className="header-section">
         <h2>{watch.model}</h2>
-        
+      </div>
         {isAdmin && (
           <div className="action-buttons">
             <button onClick={handleEdit} className="edit-btn">
@@ -62,7 +63,7 @@ export default function WatchDetail() {
             </button>
           </div>
         )}
-      </div>
+
       
       <div className="basic-info">
         <h3>Información Básica</h3>
