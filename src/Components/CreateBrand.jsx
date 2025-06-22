@@ -25,11 +25,12 @@ export default function CreateBrand() {
   };
 
   return (
-    <div>
-      <h2>Nueva Marca</h2>
+    <div className='form-container'>
+      <h2 className='head1'>Nueva Marca</h2>
       
       <form onSubmit={handleSubmit}>
-        <div>
+      <div className='form-sec2'>
+        <div className='form-group'>
           <label>
             Nombre de la marca:
           </label>
@@ -45,11 +46,14 @@ export default function CreateBrand() {
 
         {error && <div>{error}</div>}
 
-        <div>
-          <button type="button" onClick={() => navigate('/brands')}>
+        </div>
+
+          <div>
+            <button type="button" onClick={() => navigate('/brands')}
+            className='cancel-btn'>
             Cancelar
-          </button>
-          <button type="submit">
+            </button>
+            <button type="submit" className='submit-btn'>
             Guardar
           </button>
         </div>

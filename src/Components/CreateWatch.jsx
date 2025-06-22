@@ -100,14 +100,15 @@ export default function CreateWatch() {
   };
 
   return (
-    <div>
-      <h2>Crear Nuevo Reloj</h2>
+    <div className='form-container'>
+      <h2 className='head1'>Crear Nuevo Reloj</h2>
       
       <form onSubmit={handleSubmit}>
-        <div>
-          <h3>Información Básica</h3>
-          
-          <div>
+        <div className='form-sec'>
+
+          <h3 className='head3'>Información Básica</h3>
+          <div className='specs-grid'>
+          <div className='form-group'>
             <label>Modelo*</label>
             <input
               name="model"
@@ -117,7 +118,7 @@ export default function CreateWatch() {
             {errors.model && <span>{errors.model}</span>}
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Código</label>
             <input
               name="code"
@@ -126,7 +127,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Marca*</label>
             <select
               name="brand_id"
@@ -141,7 +142,7 @@ export default function CreateWatch() {
             {errors.brand_id && <span>{errors.brand_id}</span>}
           </div>
 
-          <div>
+          <div className='form-group'> 
             <label>Fecha de Lanzamiento</label>
             <input
               type="date"
@@ -151,7 +152,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Edad (meses)</label>
             <input
               type="number"
@@ -161,7 +162,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Precio*</label>
             <input
               type="number"
@@ -172,12 +173,14 @@ export default function CreateWatch() {
             />
             {errors.price && <span>{errors.price}</span>}
           </div>
+
+          </div>
         </div>
 
-        <div>
-          <h3>Especificaciones Técnicas</h3>
-          
-          <div>
+        <div className='form-sec'>
+          <h3 className='head3'>Especificaciones Técnicas</h3>
+          <div className='specs-grid'>
+          <div className='form-group'>
             <label>Chipset</label>
             <input
               name="chipset"
@@ -186,7 +189,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Tecnología de Pantalla</label>
             <input
               name="display_tec"
@@ -195,7 +198,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div  className='form-group'>
             <label>PPP de Pantalla</label>
             <input
               type="number"
@@ -205,7 +208,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Pulgadas de Pantalla</label>
             <input
               type="number"
@@ -216,7 +219,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Batería (mAh)</label>
             <input
               type="number"
@@ -226,7 +229,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'> 
             <label>Sistema Operativo</label>
             <input
               name="os"
@@ -235,7 +238,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>RAM (MB)</label>
             <input
               type="number"
@@ -245,7 +248,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Almacenamiento (MB)</label>
             <input
               type="number"
@@ -255,7 +258,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Dimensiones</label>
             <input
               name="dimensions"
@@ -264,7 +267,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Peso (g)</label>
             <input
               type="number"
@@ -274,19 +277,17 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
-            <label>
-              <input
+          <div className='form-group-check'>
+            <label> Tiene SIM </label>
+                <input
                 type="checkbox"
                 name="has_sim"
+                className='sim'
                 checked={specsData.has_sim}
-                onChange={handleChange}
-              />
-              Tiene SIM
-            </label>
+                onChange={handleChange}/>
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Calificación</label>
             <input
               type="number"
@@ -297,7 +298,7 @@ export default function CreateWatch() {
             />
           </div>
 
-          <div>
+          <div className='form-group'>
             <label>Calidad-Precio</label>
             <input
               type="number"
@@ -307,14 +308,21 @@ export default function CreateWatch() {
               onChange={handleChange}
             />
           </div>
+          </div>
         </div>
 
-        <div>
-          <button type="button" onClick={() => navigate('/watches')} disabled={isSubmitting}>
+        <div className='form-actions'>
+          <button 
+          type="button" onClick={() => navigate('/watches')} 
+          disabled={isSubmitting}
+          className='cancel-btn'>
             Cancelar
           </button>
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Guardando...' : 'Guardar'}
+          <button 
+          type="submit" 
+          disabled={isSubmitting}
+          className='submit-btn'>
+          {isSubmitting ? 'Guardando...' : 'Guardar'}
           </button>
         </div>
       </form>

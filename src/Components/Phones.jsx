@@ -23,12 +23,12 @@ export default function Phones() {
   return (
     <div className="container">
       <div className="header">
-        <h2 className='head2'>Lista de Celulares</h2>
+        <h2 className='head2'>Lista de Teléfonos</h2>
         {isAdmin && (
           <Link to="/phones/create" 
             className="create-button" 
             style={{textDecoration: 'none'}}>
-            Crear nuevo celular
+            Crear nuevo Teléfono
           </Link>
         )}
       </div>

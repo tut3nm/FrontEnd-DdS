@@ -4,9 +4,8 @@
     font-family: "Noto Serif", "sans-serif";
     font-weight: 600;
     height: auto;
-    width: 40%;
+    width: auto;
     padding: 10px;
-    margin: 10px 30%;
     margin-top: 0;
     border-radius: 40px;
     background-color: #ff99ff;
@@ -38,13 +37,13 @@
     font-size: 24px;
     text-align: center;
     font-family: "Noto Serif", "sans-serif";
-    font-weight: 600;
+    font-weight: bold;
     height: auto;
     width: 30%;
     padding: 10px;
     margin: 0 35%;
     border-radius: 40px;
-    color: #ff99ff;
+    color: #ffa600;
 }
 
 .form-sec{
@@ -55,6 +54,17 @@
     border-radius: 40px;
     background-color: #0099FF;
     margin: 10px;
+}
+
+.form-sec2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    background-color: #0099FF;
+    margin: 10px;
+    padding: 10px;
 }
 
 .specs-grid{
@@ -96,6 +106,11 @@ input{
     background-color: yellow;
 }
 
+.has-5g, .sim{
+    size: 4px;
+
+}
+
 select{
     border-radius: 20px;
     border: none;
@@ -117,10 +132,6 @@ textarea{
     font-weight: 600;
     text-align: center;
     background-color: yellow;
-}
-
-.checkbox{
-    size: 18px;
 }
 
 .cancel-btn, .submit-btn{

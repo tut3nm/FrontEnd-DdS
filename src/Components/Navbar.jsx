@@ -18,7 +18,7 @@ export default function Navbar() {
       to="/" 
       className='active'
       style={{textDecoration: 'none'}}>
-      <img src="src/assets/home.svg" alt="home" />  
+      <img src="src/assets/home.svg" alt="home" className='img1'/>  
       Home
       </NavLink>
 
@@ -26,7 +26,7 @@ export default function Navbar() {
       to="/phones" 
       className='active'
       style={{textDecoration: 'none'}}>
-      <img src="src/assets/smartphone.svg" alt="phone" />
+      <img src="src/assets/phone.svg" alt="phone" className='img2'/>
       Teléfonos
       </NavLink>
 
@@ -34,7 +34,7 @@ export default function Navbar() {
       to="/watches"
       className='active'
       style={{textDecoration: 'none'}}>
-      <img src="src/assets/watch.svg" alt="watch" />
+      <img src="src/assets/watch.svg" alt="watch" className='img3'/>
       Relojes
       </NavLink>
 
@@ -49,13 +49,16 @@ export default function Navbar() {
       to="/compare"
       className='active'
       style={{textDecoration: 'none'}}>
-      <img src="src/assets/compare.svg" alt="watchcomparar" />
+      <img src="src/assets/compare.svg" alt="comparar" className='img4'/>
       Comparar
       </NavLink>
 
       {user ? (
         <>
-          <button onClick={handleLogout} className="bot-log">Logout</button>
+          <button onClick={handleLogout} className="bot-log">
+          <img src="src/assets/logout.svg" alt="logout" />
+          Logout
+          </button>
         </>
       ) : (
         <>

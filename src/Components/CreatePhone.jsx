@@ -429,7 +429,7 @@ export default function CreatePhone() {
               <label>Soporta 5G</label>
               <input 
                   name="has_5g" 
-                  className='checkbox'
+                  className='has-5g'
                   type="checkbox" 
                   checked={specsData.has_5g} 
                   onChange={handleChange} 

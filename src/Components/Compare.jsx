@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAll, getById } from '../services/api';
+import '../styles/compare.css';
 
 export default function Compare() {
   const [resource, setResource] = useState('phones');
@@ -53,24 +54,26 @@ export default function Compare() {
   return (
     <div className="compare-container">
       <div className="compare-bar">
-        <label>
+        <label className='label-1'>
           Dispositivo:
           <select
+            className='option'
             value={resource}
             onChange={e => setResource(e.target.value)}
           >
-            <option value="phones">Celulares</option>
-            <option value="watches">Smartwatches</option>
+            <option value="phones" className='option'>Teléfonos</option>
+            <option value="watches" className='option'>Relojes</option>
           </select>
         </label>
-
-        <label>
+        <div className="compare-selects">
+        <label className='label-select'>
           Primero:
           <select
+            className='option'
             value={firstId}
             onChange={e => setFirstId(e.target.value)}
           >
-            <option value="">Selecciona uno…</option>
+            <option value="" className='option'>Selecciona uno…</option>
             {items.map(item => (
               <option key={item.id} value={item.id}>
                 {item.brand} {item.model}
@@ -79,13 +82,14 @@ export default function Compare() {
           </select>
         </label>
 
-        <label>
+        <label className='label-select'>
           Segundo:
           <select
+            className='option'
             value={secondId}
             onChange={e => setSecondId(e.target.value)}
           >
-            <option value="">Selecciona uno…</option>
+            <option value="" className='option'>Selecciona uno…</option>
             {items.map(item => (
               <option key={item.id} value={item.id}>
                 {item.brand} {item.model}
@@ -93,11 +97,14 @@ export default function Compare() {
             ))}
           </select>
         </label>
+        </div>
+      </div>
 
-        <button onClick={handleCompare} disabled={!firstId || !secondId}>
+        <button onClick={handleCompare} disabled={!firstId || !secondId}
+          className="compare-btn">
           Comparar
         </button>
-      </div>
+      
 
       <div className="compare-results">
         {firstDevice && (

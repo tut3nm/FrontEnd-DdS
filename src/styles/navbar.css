@@ -59,6 +59,8 @@ img {
 }
 
 .bot-log{ 
+    display: flex;
+    flex-direction: row;
     color: #ff0000;
     font-weight: bold;
     justify-content: center;
@@ -83,3 +85,43 @@ img {
   color: #fffb00;
 }
 
+.bot-log img {
+  content: url('src/assets/logout.svg');
+  transition: 0.2s;
+}
+
+.bot-log:hover img {
+  content: url('src/assets/logout2.svg');
+}
+
+.img1{
+  content: url('src/assets/home.svg');
+  transition: 0.2s;
+}
+.active:hover .img1 {
+  content: url('src/assets/home2.svg');
+}
+
+.img2{
+  content: url('src/assets/phone.svg');
+  transition: 0.2s;
+}
+.active:hover .img2{
+  content: url('src/assets/phone2.svg');
+}
+
+.img3{
+  content: url('src/assets/watch.svg');
+  transition: 0.2s;
+}
+.active:hover .img3 {
+  content: url('src/assets/watch2.svg');
+}
+
+.img4{
+  content: url('src/assets/compare.svg');
+  transition: 0.2s;
+}
+.active:hover .img4 {
+  content: url('src/assets/compare2.svg');
+}
