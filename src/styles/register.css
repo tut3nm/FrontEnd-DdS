@@ -1,8 +1,10 @@
-label{
-    display: flex;
-    flex-direction: row;
+.cinta-1{
     text-align: center;
     justify-content: center;
+    color: #000000;
+    font-size: 18px;
+    font-family: "Noto Serif", "sans-serif";
+    font-weight: 600;
 }
 .checkbox{
     width: 12px;

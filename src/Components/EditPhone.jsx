@@ -106,13 +106,13 @@ export default function EditPhone() {
   if (error) return <div className="error">{error}</div>;
 
   return (
-    <div className="edit-container">
-      <h2>Editar Teléfono</h2>
+    <div className="form-container">
+      <h2 className='head1'>Editar Teléfono</h2>
       
       <form onSubmit={handleSubmit}>
-        <div className="form-section">
-          <h3>Información Básica</h3>
-          
+        <div className="form-sec">
+          <h3 className='head3'>Información Básica</h3>
+          <div className='specs-grid'>
           <div className="form-group">
             <label>Modelo*</label>
             <input
@@ -176,16 +176,15 @@ export default function EditPhone() {
               required
             />
           </div>
+          </div>
         </div>
 
-        <div className="form-section">
-          <h3>Especificaciones Técnicas</h3>
+        <div className="form-sec">
+          <h3 className='head3'>Especificaciones Técnicas</h3>
           
           <div className="specs-grid">
-            <div className="spec-group">
-              <h4>Cámaras</h4>
               <div className="form-group">
-                <label>Principal</label>
+                <label>Cámara Principal</label>
                 <input
                   type="text"
                   name="cam_1"
@@ -195,7 +194,7 @@ export default function EditPhone() {
                 />
               </div>
               <div className="form-group">
-                <label>Secundaria</label>
+                <label>Cámara Secundaria</label>
                 <input
                   type="text"
                   name="cam_2"
@@ -205,7 +204,7 @@ export default function EditPhone() {
                 />
               </div>
               <div className="form-group">
-                <label>Terciaria</label>
+                <label>Cámara Terciaria</label>
                 <input
                   type="text"
                   name="cam_3"
@@ -214,7 +213,7 @@ export default function EditPhone() {
                 />
               </div>
               <div className="form-group">
-                <label>Cuaternaria</label>
+                <label>Cámara Cuaternaria</label>
                 <input
                   type="text"
                   name="cam_4"
@@ -223,7 +222,7 @@ export default function EditPhone() {
                 />
               </div>
               <div className="form-group">
-                <label>Frontal</label>
+                <label>Cámara Frontal</label>
                 <input
                   type="text"
                   name="cam_front"
@@ -231,11 +230,8 @@ export default function EditPhone() {
                   onChange={handleSpecsChange}
                   placeholder="Ej: 12MP f/2.2"
                 />
-              </div>
             </div>
 
-            <div className="spec-group">
-              <h4>Hardware</h4>
               <div className="form-group">
                 <label>Chipset</label>
                 <input
@@ -265,22 +261,17 @@ export default function EditPhone() {
                 />
               </div>
               <div className="form-group checkbox-group">
-                <label>
+                <label>Soporta 5G</label>
                   <input
                     type="checkbox"
                     name="has_5g"
                     checked={specsData.has_5g}
                     onChange={handleSpecsChange}
                   />
-                  Soporta 5G
-                </label>
-              </div>
             </div>
 
-            <div className="spec-group">
-              <h4>Pantalla</h4>
               <div className="form-group">
-                <label>Tecnología</label>
+                <label>Tecnología de la Pantalla</label>
                 <input
                   type="text"
                   name="display_tec"
@@ -317,10 +308,7 @@ export default function EditPhone() {
                   onChange={handleSpecsChange}
                 />
               </div>
-            </div>
 
-            <div className="spec-group">
-              <h4>Batería</h4>
               <div className="form-group">
                 <label>Capacidad (mAh)</label>
                 <input
@@ -339,10 +327,7 @@ export default function EditPhone() {
                   onChange={handleSpecsChange}
                 />
               </div>
-            </div>
 
-            <div className="spec-group">
-              <h4>Dimensiones</h4>
               <div className="form-group">
                 <label>Tamaño</label>
                 <input
@@ -362,10 +347,7 @@ export default function EditPhone() {
                   onChange={handleSpecsChange}
                 />
               </div>
-            </div>
 
-            <div className="spec-group">
-              <h4>Software</h4>
               <div className="form-group">
                 <label>Sistema Operativo</label>
                 <input
@@ -376,12 +358,9 @@ export default function EditPhone() {
                   placeholder="Ej: Android 13"
                 />
               </div>
-            </div>
 
-            <div className="spec-group">
-              <h4>Calificaciones</h4>
               <div className="form-group">
-                <label>General (0-10)</label>
+                <label>Cal. General (0-10)</label>
                 <input
                   type="number"
                   step="0.1"
@@ -404,10 +383,7 @@ export default function EditPhone() {
                   onChange={handleSpecsChange}
                 />
               </div>
-            </div>
 
-            <div className="spec-group full-width">
-              <h4>Video</h4>
               <div className="form-group">
                 <label>Especificaciones de video</label>
                 <textarea
@@ -417,13 +393,12 @@ export default function EditPhone() {
                   placeholder="Ej: 8K@24fps, 4K@60fps"
                   rows="3"
                 />
-              </div>
             </div>
           </div>
         </div>
 
         <div className="form-actions">
-          <button type="submit" className="save-btn">
+          <button type="submit" className="submit-btn">
             Guardar Cambios
           </button>
           <button 

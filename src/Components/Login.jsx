@@ -38,6 +38,7 @@ export default function Login() {
       <h2>Iniciar sesión</h2>
       <form onSubmit={handleLogin} className="auth-form">
         <input
+          className='entrada'
           type="text"
           placeholder="Usuario"
           value={username}
@@ -45,6 +46,7 @@ export default function Login() {
           required
         />
         <input
+          className='entrada'
           type="password"
           placeholder="Contraseña"
           value={userpass}
@@ -54,7 +56,7 @@ export default function Login() {
         <button className='button' type="submit">Ingresar</button>
       </form>
       {error && <p className="error">{error}</p>}
-      <p>
+      <p className='parrafo'>
         ¿No tenes cuenta? <Link to="/register">Regístrate aquí</Link>
       </p>
     </div>

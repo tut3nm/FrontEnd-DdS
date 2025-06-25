@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getById, update } from '../services/api';
 import { useAuth } from './AuthProvider';
+import '../styles/create.css';
 
 export default function EditWatch() {
   const { id } = useParams();
@@ -97,13 +98,13 @@ export default function EditWatch() {
   if (error) return <div className="error">{error}</div>;
 
   return (
-    <div className="edit-container">
-      <h2>Editar Reloj</h2>
+    <div className="form-container">
+      <h2 className='head1'>Editar Reloj</h2>
       
       <form onSubmit={handleSubmit}>
-        <div className="form-section">
-          <h3>Información Básica</h3>
-          
+        <div className="form-sec">
+          <h3 className='head3'>Información Básica</h3>
+          <div className='specs-grid'>
           <div className="form-group">
             <label>Modelo*</label>
             <input
@@ -167,14 +168,13 @@ export default function EditWatch() {
               required
             />
           </div>
+          </div>
         </div>
 
-        <div className="form-section">
-          <h3>Especificaciones Técnicas</h3>
+        <div className="form-sec">
+          <h3 className='head3'>Especificaciones Técnicas</h3>
           
           <div className="specs-grid">
-            <div className="spec-group">
-              <h4>Pantalla</h4>
               <div className="form-group">
                 <label>Tecnología</label>
                 <input
@@ -204,10 +204,7 @@ export default function EditWatch() {
                   onChange={handleSpecsChange}
                 />
               </div>
-            </div>
 
-            <div className="spec-group">
-              <h4>Hardware</h4>
               <div className="form-group">
                 <label>Chipset</label>
                 <input
@@ -236,23 +233,20 @@ export default function EditWatch() {
                   onChange={handleSpecsChange}
                 />
               </div>
-              <div className="form-group checkbox-group">
+              <div className="form-checkbox-group">
                 <label>
+                  Soporta SIM
+                </label>
                   <input
                     type="checkbox"
                     name="has_sim"
                     checked={specsData.has_sim}
                     onChange={handleSpecsChange}
                   />
-                  Soporta SIM
-                </label>
               </div>
-            </div>
 
-            <div className="spec-group">
-              <h4>Batería</h4>
               <div className="form-group">
-                <label>Capacidad (mAh)</label>
+                <label> Bateria (mAh)</label>
                 <input
                   type="number"
                   name="batery"
@@ -260,10 +254,8 @@ export default function EditWatch() {
                   onChange={handleSpecsChange}
                 />
               </div>
-            </div>
 
-            <div className="spec-group">
-              <h4>Software</h4>
+
               <div className="form-group">
                 <label>Sistema Operativo</label>
                 <input
@@ -274,10 +266,7 @@ export default function EditWatch() {
                   placeholder="Ej: Wear OS"
                 />
               </div>
-            </div>
 
-            <div className="spec-group">
-              <h4>Dimensiones</h4>
               <div className="form-group">
                 <label>Tamaño</label>
                 <input
@@ -298,10 +287,7 @@ export default function EditWatch() {
                   onChange={handleSpecsChange}
                 />
               </div>
-            </div>
 
-            <div className="spec-group">
-              <h4>Calificaciones</h4>
               <div className="form-group">
                 <label>General (0-10)</label>
                 <input
@@ -328,10 +314,9 @@ export default function EditWatch() {
               </div>
             </div>
           </div>
-        </div>
 
         <div className="form-actions">
-          <button type="submit" className="save-btn">
+          <button type="submit" className="submit-btn">
             Guardar Cambios
           </button>
           <button 

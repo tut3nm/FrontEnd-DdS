@@ -179,6 +179,7 @@ export default function CreateWatch() {
 
         <div className='form-sec'>
           <h3 className='head3'>Especificaciones Técnicas</h3>
+          
           <div className='specs-grid'>
           <div className='form-group'>
             <label>Chipset</label>
